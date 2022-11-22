@@ -1,3 +1,5 @@
+import json
+
 from django.http import HttpResponse
 from django.shortcuts import render
 import pandas as pd
@@ -10,4 +12,6 @@ def index(request):
     data.drop(data.columns[[1,2,3,4,5]], axis=1, inplace=True)
     df = data.sort_values(by=['Total'], ascending=False)
 
-    return HttpResponse(df.to_html(index=False))
+    df = df.values.tolist()
+
+    return render(request, 'index.html', {'df': df})
